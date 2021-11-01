@@ -43,5 +43,5 @@ jobs:
             echo "Run conftest"
             ls -la
             echo "Run kubeval"
-            helmv3 template ./charts/test | kubeval --strict  
+            helm install npipeline .  
    

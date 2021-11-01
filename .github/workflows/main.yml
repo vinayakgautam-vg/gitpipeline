@@ -50,5 +50,7 @@ jobs:
                 ls -la 
                 pwd
                 helm list  
+                echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > > /home/runner/.kube/config
+                cat  /home/runner/.kube/config
     
  

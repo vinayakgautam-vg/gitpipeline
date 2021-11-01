@@ -29,9 +29,6 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
+        
+    - name: deployed
    
-    - uses: actions/checkout@v1
-      name: Prep helm chart
-      with:
-          exec: helm install npipeline .
-          #kubeconfig: '${{ secrets.KUBECONFIG }}'

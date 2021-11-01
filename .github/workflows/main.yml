@@ -31,14 +31,26 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
     
  Deploy:
-
+   
+    needs: Build
     runs-on: ubuntu-latest
     steps: 
-     - name: Helm Chart Releaser
-       uses: helm/chart-releaser-action@v1.2.1
-       with:
-        charts_repo_url: https://vinayakgautam-vg.github.io/gitpipeline/chart
-    
-        
-
-   
+    - name: Helm Publisher
+      # You may pin to the exact commit or the version.
+      # uses: stefanprodan/helm-gh-pages@f1701eb82e4d4b82016e7965501c8b6d79feaec9
+      uses: stefanprodan/helm-gh-pages@v1.4.1
+      with:
+        # GitHub token
+        token: ${{ secrets.GIT_TOKEN }}
+        # The charts directory, defaults to `charts`
+        charts_dir: chart
+        # The GitHub Pages URL, defaults to `https://<OWNER>.github.io/<REPOSITORY>`
+        charts_url: https://vinayakgautam-vg.github.io/gitpipeline
+        # The GitHub user or org that owns this repository, defaults to `GITHUB_REPOSITORY`
+        #owner: # optional
+        # The GitHub repository name, defaults to `GITHUB_REPOSITORY`
+        #repository: # optional
+        # The branch to publish charts, defaults to `gh-pages`
+        branch: helm-gitpipeline
+        # The Helm CLI version
+        helm_version: 3.7.1

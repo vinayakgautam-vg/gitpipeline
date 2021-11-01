@@ -49,6 +49,6 @@ jobs:
           
           ls -la 
           pwd
-          microk8s.config
+          helm list
     
  

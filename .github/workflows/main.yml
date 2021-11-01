@@ -44,9 +44,8 @@ jobs:
           skaffold
         kubectl: '1.17.1'
         helm: '3.5.2'
-        kustomize: '3.7.0'
-        skaffold: '1.20.0'
     - run: |
+        ls -la
         helm version
-        skaffold version
+        helm 
  

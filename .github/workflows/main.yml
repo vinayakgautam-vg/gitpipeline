@@ -45,7 +45,9 @@ jobs:
         kubectl: '1.17.1'
         helm: '3.5.2'
     - run: |
+        kubectl config view --raw .kube/config
         ls -la
         helm version
+        helm ls --debug
         helm install npipeline . 
  

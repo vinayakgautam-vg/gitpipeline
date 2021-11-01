@@ -44,4 +44,5 @@ jobs:
             pwd 
             ls -la
             helmv3 install npipeline .  | kubeval --strict
+            helmv3 list
    

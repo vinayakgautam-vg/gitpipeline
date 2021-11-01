@@ -8,10 +8,9 @@ on:
 
 jobs:
 
-  build:
-
+ Build:
+    
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -30,20 +29,7 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
-
-
-  Deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v2 
-      - name: Deploy in EC2
+   
+    - uses: actions/checkout@v1
+      name: Prep helm chart
       
-        run: |
-              ls -la 
-              pwd
-              helm list  
-              echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > > /home/runner/.kube/config
-              cat  /home/runner/.kube/config
-    
- 

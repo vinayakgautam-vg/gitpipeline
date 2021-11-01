@@ -41,6 +41,6 @@ jobs:
        with:
          ssh-private-key: ${{ secrets.PRIVATE_KEY_ONE }}
          # Key for a first server
-         run: ssh -T ubuntu@100.26.140.3 "helm list"
+         run: ssh -i ${{ secrets.PRIVATE_KEY_ONE }} ubuntu@100.26.140.3 "helm list"
 
  

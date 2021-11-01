@@ -47,8 +47,6 @@ jobs:
         kustomize: '3.7.0'
         skaffold: '1.20.0'
     - run: |
-        kubectl version --client
-        kustomize version
         helm version
         skaffold version
  

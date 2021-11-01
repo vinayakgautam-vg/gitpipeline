@@ -45,11 +45,11 @@ jobs:
         # The charts directory, defaults to `charts`
         charts_dir: chart
         # The GitHub Pages URL, defaults to `https://<OWNER>.github.io/<REPOSITORY>`
-        charts_url: https://vinayakgautam-vg.github.io/gitpipeline
+        charts_url: https://vinayakgautam-vg.github.io/gitpipeline/
         # The GitHub user or org that owns this repository, defaults to `GITHUB_REPOSITORY`
-        #owner: # optional
+        owner: vinayakgautam-vg
         # The GitHub repository name, defaults to `GITHUB_REPOSITORY`
-        #repository: # optional
+        repository: gitpipeline
         # The branch to publish charts, defaults to `gh-pages`
         branch: helm-gitpipeline
         # The Helm CLI version

@@ -43,6 +43,6 @@ jobs:
           command: |
             pwd 
             ls -la
-            helmv3 install npipeline .  | kubeval --strict
-            helmv3 list
+            helm install npipeline .  | kubeval --strict
+            helm list
    

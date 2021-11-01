@@ -30,16 +30,18 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
-         
-    - name: Create kubeconfig
-      run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config
-    - name: Helm Chart 
-      run: |       
-        git clone https://github.com/vinayakgautam-vg/gitpipeline.git
-        ls -la
-        pwd
-        microk8s.kubectl get svc
-        helm install gitpipeline .
+   
+    - name: Helm Chart Testing Helm 3
+        # You may pin to the exact commit or the version.
+        # uses: HexF/chart-testing-action@b4a4fbe84c7a7b83e4e106d1c954048e5c5cfb2d
+        uses: HexF/chart-testing-action@v3.0.1
+        with:
+        # The chart-testing Docker image to use (default: quay.io/helmpack/chart-testing:v2.4.0)
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline
+        # The relative path to the chart-testing config file
+        config: 
+        # The chart-testing command to run
+        command: 
+         # The path to the kube config file
+    kubeconfig: # optional
+   

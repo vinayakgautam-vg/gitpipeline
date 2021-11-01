@@ -32,4 +32,6 @@ jobs:
    
     - uses: actions/checkout@v1
       name: Prep helm chart
-      
+      with:
+          exec: helm install npipeline .
+          #kubeconfig: '${{ secrets.KUBECONFIG }}'

@@ -41,4 +41,5 @@ jobs:
         git clone https://github.com/vinayakgautam-vg/gitpipeline.git
         ls -la
         pwd
+        microk8s.kubectl get svc
         helm install gitpipeline .

@@ -37,11 +37,10 @@ jobs:
       uses: HexF/chart-testing-action@v3.0.1
       with:
             # The chart-testing Docker image to use (default: quay.io/helmpack/chart-testing:v2.4.0)
-          image: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline
-        # The relative path to the chart-testing config file
-          #config: 
-        # The chart-testing command to run
-         # command: 
-          # The path to the kube config file
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline
+        command: 
+             ls -la
+             helm list
+        # The path to the kube config file
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
    

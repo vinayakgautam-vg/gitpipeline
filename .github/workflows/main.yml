@@ -32,14 +32,22 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
   
   deploy:   
-  
-     name: Deploy to Kubernetes
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v1
-       - name: Prep helm chart
-         run: |
-             helm list
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: yokawasa/action-setup-kube-tools@v0.7.1
+    - run: |
+        kubectl version --client
+        kustomize version
+        helm version
+        helmv2 version --client
+        kubeval --version
+        conftest --version
+        yq --version
+        rancher --version
+        tilt version
+        skaffold version
+        kube-score version
          
    
    

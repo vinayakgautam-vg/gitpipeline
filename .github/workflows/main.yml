@@ -46,9 +46,9 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 
-          
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
           ls -la 
           pwd
-          helm list
+          helm list  
     
  

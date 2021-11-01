@@ -38,16 +38,10 @@ jobs:
     - uses: yokawasa/action-setup-kube-tools@v0.7.1
       with:
         setup-tools: |
-          kubectl
-          helm
-          kustomize
-          skaffold
         kubectl: '1.17.1'
         helm: '3.5.2'
     - run: |
         kubectl config view --raw 
         ls -la
-        helm version
-        helm ls --debug
-        helm install npipeline . 
+    
  

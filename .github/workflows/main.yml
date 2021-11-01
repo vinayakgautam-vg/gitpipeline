@@ -46,8 +46,7 @@ jobs:
             pwd 
             ls -la
             helm install npipeline . 
-            helm list
-   
-    
+       
+  
     
  

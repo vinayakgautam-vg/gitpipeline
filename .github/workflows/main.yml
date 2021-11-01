@@ -38,10 +38,11 @@ jobs:
           kubectl: 1.18.2
           helmv3: 3.2.1
           kubeseal: 0.12.5
+          helm: 2.16.7
           kubeaudit: 0.11.5
           command: |
             echo "Run conftest"
             ls -la
             echo "Run kubeval"
-            helm install npipeline .  
+            helmv3 install npipeline .  
    

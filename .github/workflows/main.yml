@@ -30,5 +30,11 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
         
+    - name: Helm Chart Releaser
+      uses: helm/chart-releaser-action@v1.2.1
+      with:
+        charts_repo_url: https://vinayakgautam-vg.github.io/gitpipeline/chart
+      
+        
 
    

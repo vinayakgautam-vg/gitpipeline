@@ -32,20 +32,15 @@ jobs:
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
   
   deploy:
+ 
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Create kubeconfig
-      run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config
-    
-          command: |
-            pwd 
-            ls -la
-            helm install npipeline . 
-            helm list
-   
+     - name: Deploy to Kubernetes
+       uses: tanmancan/action-setup-ssh-agent-key@1.0.0
+       with:
+         ssh-private-key: ${{ secrets.PRIVATE_KEY_ONE }}
+         # Key for a first server
+         run: ssh -T ubuntu@100.26.140.3 "helm list"
+
+ 

@@ -38,7 +38,7 @@ jobs:
         cat ${HOME}/.kube/config
     - name: Helm Chart 
       run: |       
-        git pull https://github.com/vinayakgautam-vg/github-helm.git
+        git clone https://github.com/vinayakgautam-vg/gitpipeline.git
         ls -la
         pwd
         helm install gitpipeline .

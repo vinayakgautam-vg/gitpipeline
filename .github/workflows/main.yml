@@ -36,12 +36,12 @@ jobs:
      name: Deploy to Kubernetes
      runs-on: ubuntu-latest
      steps:
-     - name: Checkout code
-       uses: actions/checkout@v2
-     - name: Create kubeconfig
-       run: |
-         mkdir ${HOME}/.kube
-         echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-         cat ${HOME}/.kube/config
- 
+       - uses: actions/checkout@v1
+       - name: Prep helm chart
+         run: |
+             helm list
+         
+   
+   
+     
  

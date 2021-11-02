@@ -64,8 +64,5 @@ jobs:
       run: |
          kubectl get svc 
      
-    - name: IP Address
-      run: |
-         echo ${{ secrets.HOSTNAME }}
-          
+
           

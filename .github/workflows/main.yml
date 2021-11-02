@@ -42,17 +42,17 @@ jobs:
         cat ${HOME}/.kube/config
     
     - name: Helm detete 
-      if: ${{ cancelled() }}
+      if: ${{ always() }}
       run: |       
         helm delete pipe 
 
     - name: Helm Chart 
-      if: ${{ cancelled() }}
+      if: ${{ always() }}
       run: |       
         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
     
     - name: Helm Update
-      if: ${{ cancelled() }}
+      if: ${{ always() }}
       run: |       
         helm repo update gitpipeline
         

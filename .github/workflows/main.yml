@@ -42,9 +42,7 @@ jobs:
         cat ${HOME}/.kube/config
     - name: Helm Chart 
       run: |       
-       
-        ls -la
-        pwd
+
         helm version
         helm list
 

@@ -46,6 +46,6 @@ jobs:
         ls -la
         pwd
         helm version
-       
+        helm list
 
  

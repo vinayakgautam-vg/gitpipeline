@@ -43,7 +43,7 @@ jobs:
     - name: Helm Chart 
       run: |       
         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
-    - name: Helm Chart 
+    - name: Helm Install 
       run: |
         helm install pipe gitpipeline/gitpipeline
 

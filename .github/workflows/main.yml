@@ -56,7 +56,7 @@ jobs:
       run: |       
         helm repo update gitpipeline
         
-    - name: Helm Install yoyo
+    - name: Helm Install
       run: |
         helm install pipe gitpipeline/gitpipeline  
         

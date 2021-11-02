@@ -42,8 +42,7 @@ jobs:
         cat ${HOME}/.kube/config
     - name: Helm Chart 
       run: |       
-
-        helm version
-        helm list
+        helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
+        helm install pipe gitpipeline/gitpipeline
 
  

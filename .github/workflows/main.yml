@@ -45,6 +45,6 @@ jobs:
         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
     - name: Helm Install yoyo
       run: |
-        helm install pipe gitpipeline/gitpipeline
+        helm install pipe gitpipeline/gitpipeline --insecure-skip-tls-verify: true
 
  

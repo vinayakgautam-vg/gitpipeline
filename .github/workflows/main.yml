@@ -43,8 +43,7 @@ jobs:
      
     - name: Deleteing old helm chart 
       run: |       
-   
-        helm repo update gitpipeline
+         helm repo update gitpipeline
     
     - name: Helm Chart 
       run: |       

@@ -48,7 +48,11 @@ jobs:
     - name: NodePort
       run: |
           export NODE_PORT=$(microk8s.kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services pipe-gitpipeline)
+    - name: NodeIP
+      run: |   
           export NODE_IP=$(microk8s.kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-          echo http://$NODE_IP:$NODE_PORT
+    - name: URL
+      run: |   
+         echo http://$NODE_IP:$NODE_PORT
 
  

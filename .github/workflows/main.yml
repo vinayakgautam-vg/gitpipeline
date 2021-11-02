@@ -35,12 +35,17 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: tanmancan/action-setup-ssh-agent-key@1.0.0
-      with:
-        ssh-private-key: ${{ secrets.PRIVATE_KEY_ONE }}
-      # Key for a first server
-        run: |
-          ssh -T ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }} "helm version"
-            echo $WELCOME
-    
+    - name: Create kubeconfig
+      run: |
+        mkdir ${HOME}/.kube
+        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+        cat ${HOME}/.kube/config
+    - name: Helm Chart 
+      run: |       
+       
+        ls -la
+        pwd
+        helm version
+       
+
  

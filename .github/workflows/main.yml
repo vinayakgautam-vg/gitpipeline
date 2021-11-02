@@ -40,6 +40,12 @@ jobs:
         mkdir ${HOME}/.kube
         echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
         cat ${HOME}/.kube/config
+     
+    - name: Deleteing old helm chart 
+      run: |       
+        helm delete pipe-gitpipeline
+        helm repo update gitpipeline
+    
     - name: Helm Chart 
       run: |       
         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart

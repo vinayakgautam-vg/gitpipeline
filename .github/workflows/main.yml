@@ -45,6 +45,6 @@ jobs:
         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
     - name: Helm Install yoyo
       run: |
-        helm install pipe gitpipeline/gitpipeline --kube-apiserver https://127.0.0.1:16443 --kubeconfig /home/ubuntu/.kube/config
+        helm install pipe gitpipeline/gitpipeline --kube-apiserver https://172.31.64.69:16443 --kubeconfig /home/ubuntu/.kube/config
 
  

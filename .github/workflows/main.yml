@@ -58,9 +58,8 @@ jobs:
         
     - name: Helm Install yoyo
       run: |
-        helm install pipe gitpipeline/gitpipeline  --kube-token=UUx3aUppWWY1UjBLd3cxNndHNU5FQ014MDcwN0R6cjRteFZEQXpXVlBZOD0K --cert-file=/var/snap/microk8s/current/certs/ca.crt
-
-    
+        helm install pipe gitpipeline/gitpipeline  
+        
     - name: NodePort
       run: |
          kubectl get svc 

@@ -63,4 +63,9 @@ jobs:
     - name: NodePort
       run: |
          kubectl get svc 
+     
+    - name: IP Address
+      run: |
+         echo ${{ secrets.HOSTNAME }}
+          
           

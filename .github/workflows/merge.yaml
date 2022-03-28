@@ -29,21 +29,11 @@ jobs:
           FILES: |
             index.html
             
-#       - name: slack notificator
-#         uses: brainly/action-slack-notificator@1.0.2
-#         with:
-#          webhookUrl: ${{ secrets.SEND_SLACK_NOTIFICATION }}
-#          messageContent: View the test results on Github
-
-      - name: "Check if should send slack notification"
-        id: send-slack-notification
-        uses: peter-murray/value-as-flag-action@0.0.1
-        with:
-          value: true
-           #default: false
-          
-    
-
       - name: "Notify Slack"
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}'  ${{ secrets.CHANNEL_WEBHOOK_URL }}
+        run: curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+            
+      - name: slack notificator
+        uses: brainly/action-slack-notificator@1.0.2
+        with:
+         webhookUrl: ${{ secrets.CHANNEL_WEBHOOK_URL }}
+         messageContent: View the test results on Github

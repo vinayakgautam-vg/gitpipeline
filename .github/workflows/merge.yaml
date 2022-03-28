@@ -28,14 +28,13 @@ jobs:
 #           FILES: |
 #             index.html
             
-      - name: slack notificator
-        uses: brainly/action-slack-notificator@1.0.2
-        with:
-         webhookUrl: ${{ secrets.SEND_SLACK_NOTIFICATION }}
-         messageContent: View the test results on Github
+#       - name: slack notificator
+#         uses: brainly/action-slack-notificator@1.0.2
+#         with:
+#          webhookUrl: ${{ secrets.SEND_SLACK_NOTIFICATION }}
+#          messageContent: View the test results on Github
 
       - name: "Check if should send slack notification"
-
         id: send-slack-notification
         uses: peter-murray/value-as-flag-action@0.0.1
         with:
@@ -45,6 +44,6 @@ jobs:
     
 
       - name: "Notify Slack"
-        if: && steps.send-slack-notification.outputs.value == 'true'
+        #if: steps.send-slack-notification.outputs.value == 'true'
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}'

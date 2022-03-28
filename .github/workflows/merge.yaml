@@ -2,7 +2,6 @@ name: merge
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 #   pull_request:
 #     types: [closed]
 #     branches: 
@@ -14,10 +13,12 @@ jobs:
     #if: github.event.pull_request.merged == true   
    
     steps:
-# #       - name: Checkout repo
-# #         uses: actions/checkout@v2
-# #         with:
-# #           fetch-depth: 2
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          FILES: |
+            index.html
       
 #       - uses: technote-space/get-diff-action@v6
 #         with:
@@ -39,7 +40,7 @@ jobs:
         uses: peter-murray/value-as-flag-action@0.0.1
         with:
           value: ${{ secrets.SEND_SLACK_NOTIFICATION }}
-           default: false
+           #default: false
           
     
 

@@ -12,21 +12,21 @@ jobs:
     runs-on: ubuntu-18.04
     #if: github.event.pull_request.merged == true   
    
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-          FILES: |
-            index.html
-      
-#       - uses: technote-space/get-diff-action@v6
+#     steps:
+#       - name: Checkout repo
+#         uses: actions/checkout@v2
 #         with:
-#           # PATTERNS: |
-#           #   +(src|__tests__)/**/*.ts
-#           #   !src/exclude.ts
+#           fetch-depth: 2
 #           FILES: |
 #             index.html
+      
+      - uses: technote-space/get-diff-action@v6
+        with:
+          # PATTERNS: |
+          #   +(src|__tests__)/**/*.ts
+          #   !src/exclude.ts
+          FILES: |
+            index.html
             
 #       - name: slack notificator
 #         uses: brainly/action-slack-notificator@1.0.2
@@ -38,12 +38,12 @@ jobs:
         id: send-slack-notification
         uses: peter-murray/value-as-flag-action@0.0.1
         with:
-          value: ${{ secrets.SEND_SLACK_NOTIFICATION }}
+          value: true
            #default: false
           
     
 
       - name: "Notify Slack"
-        #if: steps.send-slack-notification.outputs.value == 'true'
+        if: steps.send-slack-notification.outputs.value == 'true'
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.DEVOPS_CHANNEL_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' --data '{"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

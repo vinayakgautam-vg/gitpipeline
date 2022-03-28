@@ -1,0 +1,37 @@
+on:
+  pull_request:
+    types: [closed]
+    branches: 
+      - staging
+
+jobs:
+  build-deploy-demo-dev:
+    runs-on: ubuntu-18.04
+    if: github.event.pull_request.merged == true   
+   
+    steps:
+#       - name: Checkout repo
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 2
+      
+      - uses: technote-space/get-diff-action@v6
+        with:
+          # PATTERNS: |
+          #   +(src|__tests__)/**/*.ts
+          #   !src/exclude.ts
+          FILES: |
+            index.html
+
+      - name: "Check if should send slack notification"
+        if: failure()
+        id: send-slack-notification
+        uses: peter-murray/value-as-flag-action@0.0.1
+        with:
+          value: ${{ secrets.SEND_SLACK_NOTIFICATION }}
+          default: false
+
+      - name: "Notify Slack"
+        if: failure() && steps.send-slack-notification.outputs.value == 'true'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data 'View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}'

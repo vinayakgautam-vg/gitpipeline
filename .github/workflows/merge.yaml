@@ -47,4 +47,4 @@ jobs:
       - name: "Notify Slack"
         if: && steps.send-slack-notification.outputs.value == 'true'
         run: |
-          curl -X POST -H 'Content-type: application/json' --data 'View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}'
+          curl -X POST -H 'Content-type: application/json' --data '{"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}'

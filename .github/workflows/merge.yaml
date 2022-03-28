@@ -11,18 +11,18 @@ jobs:
     if: github.event.pull_request.merged == true   
    
     steps:
-#       - name: Checkout repo
-#         uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 2
+# #       - name: Checkout repo
+# #         uses: actions/checkout@v2
+# #         with:
+# #           fetch-depth: 2
       
-      - uses: technote-space/get-diff-action@v6
-        with:
-          # PATTERNS: |
-          #   +(src|__tests__)/**/*.ts
-          #   !src/exclude.ts
-          FILES: |
-            index.html
+#       - uses: technote-space/get-diff-action@v6
+#         with:
+#           # PATTERNS: |
+#           #   +(src|__tests__)/**/*.ts
+#           #   !src/exclude.ts
+#           FILES: |
+#             index.html
             
       - name: slack notificator
         uses: brainly/action-slack-notificator@1.0.2

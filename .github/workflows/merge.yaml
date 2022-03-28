@@ -19,7 +19,7 @@ jobs:
 #         with:
 #           fetch-depth: 2
 #           FILES: |
-#             index.html
+#            index.html
       
       - uses: technote-space/get-diff-action@v6
         with:

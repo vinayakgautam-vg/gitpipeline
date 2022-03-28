@@ -1,14 +1,14 @@
 name: merge
-on:
-  pull_request:
-    types: [closed]
-    branches: 
-      - main
+# on:
+#   pull_request:
+#     types: [closed]
+#     branches: 
+#       - main
 
 jobs:
-  build-deploy-demo-dev:
+  test:
     runs-on: ubuntu-18.04
-    if: github.event.pull_request.merged == true   
+    #if: github.event.pull_request.merged == true   
    
     steps:
 # #       - name: Checkout repo

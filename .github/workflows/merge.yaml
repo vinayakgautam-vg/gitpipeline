@@ -12,34 +12,34 @@ jobs:
   test:
     runs-on: ubuntu-18.04  
     steps:
-#       - uses: technote-space/get-diff-action@v6
-#         id: change
-#         with:
-#           # PATTERNS: |
-#           #   +(src|__tests__)/**/*.ts
-#           #   !src/exclude.ts
-#           FILES: |
-#             index.html
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-      - name: Get changed files
-        id: changed-files
+#       - name: Get changed files
+#         id: changed-files
+#         uses: tj-actions/changed-files@v18.4
+
+#       - name: List all added files
+#         run: |
+#           for file in ${{ steps.changed-files.outputs.added_files }}; do
+#             echo "$file was added"
+#           done
+#       - name: Run step when a file changes
+#         if: contains(steps.changed-files.outputs.modified_files, 'index.html')
+#         run: |
+#           echo "Your index.html file has been modified."
+#           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+
+      - name: Get specific changed files
+        id: changed-files-specific
         uses: tj-actions/changed-files@v18.4
-
-      - name: List all added files
+        with:
+          files: |
+             index.html
+             
+      - name: Run step if only the files listed above change
+        if: steps.changed-files-specific.outputs.only_changed == 'true'
         run: |
-          for file in ${{ steps.changed-files.outputs.added_files }}; do
-            echo "$file was added"
-          done
-      - name: Run step when a file changes
-        if: contains(steps.changed-files.outputs.modified_files, 'index.html')
-        run: |
-          echo "Your index.html file has been modified."
+          echo "Only files listed above have changed."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-
-      - name: "Notify Slack"
-        if: ( 'index.html' == 'index.html' )
-        run: |
-           curl -X POST -H 'Content-type: application/json' --data '{"text":"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

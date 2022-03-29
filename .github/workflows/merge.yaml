@@ -21,10 +21,10 @@ jobs:
              index.html
              
       - name: Run step if only the files listed above change
-        if: steps.changed-files-specific.outputs.only_changed == 'true'
+#         if: steps.changed-files-specific.outputs.only_changed == 'true'
         run: |
           echo "Only files listed above have changed."
-          for file in ${{ steps.changed-files-specific.outputs.changed_files }}; do
+          for file in ${{ steps.changed-files-specific.outputs.only_changed }}; do
             echo "$file was deleted"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
           done
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

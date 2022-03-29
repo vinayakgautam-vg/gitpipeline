@@ -3,10 +3,10 @@ on:
   push:
     branches:  
       - main 
-#   pull_request:
-#     types: [closed]
-#     branches: 
-#       - main
+  pull_request:
+    types: [closed]
+    branches: 
+      - main
 
 jobs:
   test:
@@ -24,9 +24,3 @@ jobs:
       - name: "Notify Slack"
         run: |
            curl -X POST -H 'Content-type: application/json' --data '{"text":"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-            
-#       - name: slack notificator
-#         uses: brainly/action-slack-notificator@1.0.2
-#         with:
-#          webhookUrl: ${{ secrets.CHANNEL_WEBHOOK_URL }}
-#          messageContent: View the test results on Github

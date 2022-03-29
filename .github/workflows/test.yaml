@@ -1,0 +1,25 @@
+name: Merge Alert 
+
+on:
+  push:
+   branches: 
+     - alert1
+  pull_request:
+   
+jobs:
+  test:
+    runs-on: ubuntu-18.04  
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files using defaults
+        id: changed-files
+        uses: tj-actions/changed-files@v18.4
+             
+      - name: Run step when a file changes
+        if: contains(steps.changed-files.outputs.modified_files, 'templates/NOTES.txt')
+        run: |
+          echo "Your file has been modified."
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Your templates/NOTES.txt config file has been modified."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

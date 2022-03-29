@@ -31,9 +31,10 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+            echo "::set-output name=OUTPUT::$file"
           done
             
       - name: "Notify Slack"
+        if: ( 'index.html' == 'index.html' )
         run: |
            curl -X POST -H 'Content-type: application/json' --data '{"text":"View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

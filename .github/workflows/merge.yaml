@@ -16,21 +16,6 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-#       - name: Get changed files
-#         id: changed-files
-#         uses: tj-actions/changed-files@v18.4
-
-#       - name: List all added files
-#         run: |
-#           for file in ${{ steps.changed-files.outputs.added_files }}; do
-#             echo "$file was added"
-#           done
-#       - name: Run step when a file changes
-#         if: contains(steps.changed-files.outputs.modified_files, 'index.html')
-#         run: |
-#           echo "Your index.html file has been modified."
-#           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-
       - name: Get specific changed files
         id: changed-files-specific
         uses: tj-actions/changed-files@v18.4

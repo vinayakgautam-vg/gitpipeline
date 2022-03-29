@@ -26,5 +26,5 @@ jobs:
       - name: Run step if only the files listed above change
         if: steps.changed-files-specific.outputs.only_changed == 'true'
         run: |
-          echo "Only files listed above have changed."
+          echo "Only $files listed above have changed."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html file has been modified. View the test results on Github: https://github.com/0chain/system_test/actions/runs/${{ github.run_id }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

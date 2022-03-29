@@ -3,7 +3,7 @@ name: Merge Alert
 on:
   push:
    branches: 
-     - alert1
+     - main
   pull_request:
    
 jobs:

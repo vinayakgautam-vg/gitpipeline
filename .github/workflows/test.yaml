@@ -54,13 +54,13 @@ jobs:
         id: image_name
         run: |
          SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
-         echo "$TAG-$SHORT_SHA" > name 
+         echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV 
          
      
       - name: Run image update command  
         id: image_updated
         run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner: ${{ steps.image_name.name }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+         curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner: ${{ env.NAME }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
      
      
   server:

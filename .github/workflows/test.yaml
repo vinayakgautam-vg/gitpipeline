@@ -19,7 +19,7 @@ jobs:
         uses: tj-actions/changed-files@v18.4
         
       - name: Run step when a file changes
-        if: steps.changed-files.outputs.any_modified == 'true'
+        if: contains(steps.changed-files.outputs.any_modified) == 'true'
         run: |
           echo "Your file has been modified."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your file file has been modified."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

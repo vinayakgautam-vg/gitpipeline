@@ -23,7 +23,26 @@ jobs:
 #         run: |
 #           echo "Your file has been modified."
 #           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your templates/NOTES.txt config file has been modified."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-
+      - name: Set docker image tag
+        id: get_info
+        run: |
+         if [[ "${{github.ref}}" == refs/pull/* ]]; then
+          tag=${GITHUB_REF/\/merge/}
+          echo "TAG=$(echo pr-${tag:10})" >> $GITHUB_ENV
+         else
+          echo "TAG=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//-/g')" >> $GITHUB_ENV
+         fi
+         echo "BRANCH=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo ${GITHUB_REF#refs/*/} || echo $GITHUB_HEAD_REF)" >> $GITHUB_ENV
+         echo "SHA=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo $GITHUB_SHA || echo '${{ github.event.pull_request.head.sha }}')" >> $GITHUB_ENV
+      
+      - name: image name 
+        id: image_name
+        run: |
+         SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
+         echo"$tag-$short"
+   
+        
+       
   server:
     needs: test
     runs-on: ubuntu-18.04  

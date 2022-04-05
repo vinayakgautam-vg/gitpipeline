@@ -53,5 +53,5 @@ jobs:
       - name: update image on network  
         if: 
         run: |
-          echo "Your file has been modified."
+          echo "Sharder/Miner:${{ env.NAME }} updated to the network."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:${{ env.NAME }} image updated on network name."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

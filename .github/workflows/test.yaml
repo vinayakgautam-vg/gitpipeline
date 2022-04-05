@@ -56,13 +56,6 @@ jobs:
          SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
          echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV 
          
-     
-      - name: Run image update command  
-        id: image_updated
-        run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner: ${{ env.NAME }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-     
-     
   server:
     needs: test
     runs-on: ubuntu-18.04  
@@ -70,4 +63,4 @@ jobs:
       - name: Run step when a file changes
         run: |
           echo "Your file has been modified."
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:$TAG-$SHORT_SHA image updated on network name."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:${{ env.NAME }} image updated on network name."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

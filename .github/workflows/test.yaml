@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
       
-      - name: Get specific changed files
+      - name: Get config map changed files
         id: changed-files-specific
         uses: tj-actions/changed-files@v18.6
         with:
@@ -22,22 +22,16 @@ jobs:
             index.html
             templates/NOTES.txt
 
-      - name: Run step if any of the listed files above change
+      - name: update config map command 
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
       
-      - name: Get changed files using defaults
+      - name: Get changed files 
         id: changed-files
         uses: tj-actions/changed-files@v18.4   
      
-#       - name: Run step when a file changes
-#         if: contains(steps.changed-files.outputs.modified_files, 'templates/NOTES.txt')
-#         run: |
-#           echo "Your file has been modified."
-#           curl -X POST -H 'Content-type: application/json' --data '{"text":"Your templates/NOTES.txt config file has been modified."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-
       - name: get docker image name
         id: get_info
         run: |
@@ -55,12 +49,9 @@ jobs:
         run: |
          SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
          echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV 
-         
-  server:
-    needs: test
-    runs-on: ubuntu-18.04  
-    steps:   
-      - name: Run step when a file changes
+  
+      - name: update image on network  
+        if: 
         run: |
           echo "Your file has been modified."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:${{ env.NAME }} image updated on network name."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

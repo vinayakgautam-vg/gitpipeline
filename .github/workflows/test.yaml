@@ -39,7 +39,7 @@ jobs:
         id: image_name
         run: |
          SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
-         echo"$TAG-$SHORT_SHA"
+         echo "$TAG-$SHORT_SHA"
    
         
        

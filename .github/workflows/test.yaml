@@ -59,7 +59,7 @@ jobs:
       - name: image name 
         id: image_updated
         run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:$TAG-$SHORT_SHA"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+         curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner: ${{ $TAG-$SHORT_SHA }}"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
          
   server:
     needs: test

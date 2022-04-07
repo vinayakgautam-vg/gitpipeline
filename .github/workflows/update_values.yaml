@@ -59,7 +59,7 @@ jobs:
           git branch -M master
           git commit -m "update config"
           git status
-          git push -u origin master --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+          git push -f origin master --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
 #       - name: Push changes
 #         uses: ad-m/github-push-action@master

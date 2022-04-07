@@ -54,6 +54,8 @@ jobs:
       - name: Pushes to another repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
+          git config --global user.email "iamvinigautam@gmail.com"
+          git config --global user.name "vinayakgautam-vg"
           git add val.yaml
           git commit -m "update config"
           git remote add origin https://github.com/vinayakgautam-vg/npipeline-helm.git

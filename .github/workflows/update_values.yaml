@@ -61,6 +61,7 @@ jobs:
           ls -la
           pwd
           cd output
+          pwd && ls -la 
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git add val.yaml

@@ -26,7 +26,6 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
-          cat index.html
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
           cat <<\EOF > val.yaml
             i
@@ -48,11 +47,8 @@ jobs:
            cat 
            ls -la
            pwd
-           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml > test
-           echo "$test"
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
            cat val.yaml
-           tail val.yaml
-           more val.yaml
            ls -la
            
       - name: Get changed files 

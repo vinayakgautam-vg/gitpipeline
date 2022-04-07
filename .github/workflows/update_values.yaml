@@ -64,12 +64,13 @@ jobs:
           pwd && ls -la 
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
+          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
+          git init
           git add val.yaml
           git commit -m "update config"
-          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git branch -M master
           git push -u origin master 
-           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
      
 #       - name: Pushes to another repository
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'

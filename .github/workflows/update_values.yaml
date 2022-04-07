@@ -58,12 +58,13 @@ jobs:
           git status
           git branch 
           cat .git/config
+          git push -f origin master --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.API_TOKEN_GITHUB }}
-          branch: master     
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.API_TOKEN_GITHUB }}
+#           branch: master     
 #       - name: Pushes to another repository
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
 #         uses: cpina/github-action-push-to-another-repository@main

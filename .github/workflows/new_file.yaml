@@ -56,6 +56,7 @@ jobs:
           cd ../update
           ls -la
           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+          ls -la
           cp val.yaml npipeline-helm/
           cd npipeline-helm
           ls -la

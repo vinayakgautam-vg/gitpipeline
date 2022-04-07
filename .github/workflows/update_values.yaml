@@ -50,15 +50,24 @@ jobs:
            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
            echo "$(<val.yaml)"
            ls -la
-     
+           
       - name: Pushes to another repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: '/home/runner/work/gitpipeline/gitpipeline/val.yaml'
-          destination-github-username: 'vinayakgautam-vg'
-          destination-repository-name: 'npipeline-helm'
-          user-email: iamvinigautam@gmail.com
-          target-branch: master
+        run: |
+          git add val.yaml
+          git commit -m "update config"
+          git remote add origin https://github.com/vinayakgautam-vg/npipeline-helm.git
+          git branch -M master
+          git push -u origin master 
+     
+#       - name: Pushes to another repository
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         uses: cpina/github-action-push-to-another-repository@main
+#         env:
+#           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+#         with:
+#           source-directory: '/home/runner/work/gitpipeline/gitpipeline/val.yaml'
+#           destination-github-username: 'vinayakgautam-vg'
+#           destination-repository-name: 'npipeline-helm'
+#           user-email: iamvinigautam@gmail.com
+#           target-branch: master

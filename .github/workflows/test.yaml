@@ -44,7 +44,11 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
            echo "updated values.yaml."
+           ls -la
+           pwd
            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' values.yaml
+           cat values.yaml
+           ls -la
            
       - name: Get changed files 
         id: changed-files

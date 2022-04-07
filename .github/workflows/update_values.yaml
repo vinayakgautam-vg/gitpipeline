@@ -54,6 +54,7 @@ jobs:
       - name: Pushes to another repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
+          rm -rf .git
           ls -la
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"

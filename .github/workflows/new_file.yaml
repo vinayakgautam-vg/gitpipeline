@@ -26,7 +26,8 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
-          cd /root/home/runner
+          cd .. && mkdir update
+          cd update
           ls 
           cat <<\EOF > val.yaml
           i

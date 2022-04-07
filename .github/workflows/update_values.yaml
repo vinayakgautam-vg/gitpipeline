@@ -61,6 +61,7 @@ jobs:
           ls -la
           pwd
           pwd && ls -la 
+          rm -r .git $$ .github
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git

@@ -57,7 +57,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: '~/val.yaml'
+          source-directory: '/home/runner/work/gitpipeline/gitpipeline/val.yaml'
           destination-github-username: 'vinayakgautam-vg'
           destination-repository-name: 'npipeline-helm'
           user-email: iamvinigautam@gmail.com

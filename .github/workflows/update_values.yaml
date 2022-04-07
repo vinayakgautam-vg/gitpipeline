@@ -59,9 +59,6 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           ls -la
-          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
-          cp val.yaml npipeline-helm
-          cd npipeline-helm
           pwd && ls -la 
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"

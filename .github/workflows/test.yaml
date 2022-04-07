@@ -28,16 +28,16 @@ jobs:
           echo "0chain config maps updated ."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
           echo <<\EOF > values.yaml
-i
-am
-testing
-config
-map
-in
-git
-action
-in
-task
+          i
+          am
+          testing
+          config
+          map
+          in
+          git
+          action
+          in
+          task
           EOF
       
       - name:  update values.yaml

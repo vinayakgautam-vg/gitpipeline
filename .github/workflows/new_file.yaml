@@ -54,10 +54,13 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           cd ../update
+          ls -la
           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
           cp val.yaml npipeline-helm/
           cd npipeline-helm
+          ls -la
           git add val.yaml
           git commit -m "update config"
+          git status
           git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

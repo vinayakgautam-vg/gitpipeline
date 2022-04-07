@@ -57,22 +57,3 @@ jobs:
           git status
           git push -f --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"done."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-#       - name: Push changes
-#         uses: ad-m/github-push-action@master
-#         with:
-#           github_token: ${{ secrets.API_TOKEN_GITHUB }}
-#           branch: master     
-#       - name: Pushes to another repository
-#         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         uses: cpina/github-action-push-to-another-repository@main
-#         env:
-#           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-#         with:
-#           source-directory: '/home/runner/work/gitpipeline/gitpipeline/val.yaml'
-#           destination-github-username: 'vinayakgautam-vg'
-#           destination-repository-name: 'npipeline-helm'
-#           user-email: iamvinigautam@gmail.com
-# #           target-branch: master
-#             git branch -M master
-#             git push -u origin master 
-# git push -f origin master --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git

@@ -59,20 +59,21 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           ls -la
-          pwd
+          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+          cd npipeline-helm
           pwd && ls -la 
-          rm -r .git && rm -r .github
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
           git commit -m "update config"
+          git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.API_TOKEN_GITHUB }}
-          branch: master     
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.API_TOKEN_GITHUB }}
+#           branch: master     
 #       - name: Pushes to another repository
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
 #         uses: cpina/github-action-push-to-another-repository@main

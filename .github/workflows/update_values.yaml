@@ -42,6 +42,8 @@ jobs:
           in
           task
           EOF
+          ls 
+          pwd
       
       - name:  update values.yaml
         if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -50,7 +52,7 @@ jobs:
            cat 
            ls -la
            pwd
-           sed -i -e 's/^/    /' ../index.html &&  sed -i '3  r ../index.html' val.yaml
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' output/val.yaml
            echo "$(<val.yaml)"
            ls -la
            

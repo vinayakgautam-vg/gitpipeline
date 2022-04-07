@@ -27,6 +27,9 @@ jobs:
         run: |
           echo "0chain config maps updated ."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          mkdir output && cd output
+          ls 
+          pwd 
           cat <<\EOF > val.yaml
           i
           am
@@ -54,8 +57,8 @@ jobs:
       - name: Pushes to another repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
-          rm -rf .git
           ls -la
+          pwd
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git add val.yaml

@@ -66,7 +66,7 @@ jobs:
           git config --global user.name "vinayakgautam-vg"
           git add val.yaml
           git commit -m "update config"
-          git remote add origin https://github.com/vinayakgautam-vg/npipeline-helm.git
+          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git branch -M master
           git push -u origin master 
            curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

@@ -1,0 +1,72 @@
+name: update
+
+on:
+  push:
+   branches: 
+     - main
+  pull_request:
+   
+jobs:
+  test:
+    runs-on: ubuntu-18.04  
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+ 
+      - name: Get config map changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v18.6
+        with:
+          files: |
+            index.html
+            templates/NOTES.txt
+ 
+      - name: update config map command 
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "0chain config maps updated ."
+          ls 
+          pwd 
+          cat <<\EOF > val.yaml
+          i
+          am
+          testing
+          config
+          map
+          in
+          git
+          action
+          in
+          task
+          EOF
+          ls 
+          pwd
+      
+      - name:  update values.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+           echo "updated values.yaml."
+           cat 
+           ls -la
+           pwd
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+           echo "$(<val.yaml)"
+           ls -la
+           
+      - name: Pushes to another repository
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          ls -la
+          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+          cp val.yaml npipeline-helm
+          cd npipeline-helm
+          pwd && ls -la 
+          git config --global user.email "iamvinigautam@gmail.com"
+          git config --global user.name "vinayakgautam-vg"
+          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
+          git add val.yaml
+          git commit -m "update config"
+          git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

@@ -27,7 +27,25 @@ jobs:
         run: |
           echo "0chain config maps updated ."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          echo <<\EOF > values.yaml
+i
+am
+testing
+config
+map
+in
+git
+action
+in
+task
+          EOF
       
+      - name:  update values.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+           echo "updated values.yaml."
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' values.yaml
+           
       - name: Get changed files 
         id: changed-files
         uses: tj-actions/changed-files@v18.4   
@@ -51,7 +69,6 @@ jobs:
          echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV 
   
       - name: update image on network  
-        if: 
         run: |
           echo "Sharder/Miner:${{ env.NAME }} updated to the network."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Sharder/Miner:${{ env.NAME }} image updated on network name."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

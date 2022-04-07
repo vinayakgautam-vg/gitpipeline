@@ -46,8 +46,11 @@ jobs:
            echo "updated values.yaml."
            ls -la
            pwd
-           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml > test
+           echo "$test"
            cat val.yaml
+           tail val.yaml
+           more val.yaml
            ls -la
            
       - name: Get changed files 

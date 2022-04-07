@@ -60,6 +60,9 @@ jobs:
           cp val.yaml npipeline-helm/
           cd npipeline-helm
           ls -la
+          git config --global user.email "iamvinigautam@gmail.com"
+          git config --global user.name "vinayakgautam-vg"
+          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
           git commit -m "update config"
           git status

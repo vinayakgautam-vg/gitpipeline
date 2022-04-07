@@ -26,7 +26,6 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
           mkdir output && cd output
           ls 
           pwd 
@@ -69,6 +68,7 @@ jobs:
           git remote add origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git branch -M master
           git push -u origin master 
+           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
      
 #       - name: Pushes to another repository
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'

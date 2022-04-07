@@ -26,9 +26,6 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
-          cd .. && mkdir update
-          cd update
-          ls 
           cat <<\EOF > val.yaml
           i
           am
@@ -50,7 +47,7 @@ jobs:
            echo "updated values.yaml."
            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
            echo "$(<val.yaml)"
-           mkdir update
+           mkdir ../update
            cp val.yaml ../update
            
       - name: Pushes to another repository

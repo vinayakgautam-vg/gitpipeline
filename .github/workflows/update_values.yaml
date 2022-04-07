@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          persist-credentials: false
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
  
       - name: Get config map changed files
@@ -67,10 +68,12 @@ jobs:
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
           git commit -m "update config"
-          git branch -M master
-          git push -u origin master 
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-     
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.API_TOKEN_GITHUB }}
+          branch: master     
 #       - name: Pushes to another repository
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
 #         uses: cpina/github-action-push-to-another-repository@main
@@ -81,4 +84,6 @@ jobs:
 #           destination-github-username: 'vinayakgautam-vg'
 #           destination-repository-name: 'npipeline-helm'
 #           user-email: iamvinigautam@gmail.com
-#           target-branch: master
+# #           target-branch: master
+#             git branch -M master
+#             git push -u origin master 

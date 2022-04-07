@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "0chain config maps updated ."
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
-          echo <<\EOF > values.yaml
+          echo <<\EOF > val.yaml
           i
           am
           testing
@@ -46,8 +46,8 @@ jobs:
            echo "updated values.yaml."
            ls -la
            pwd
-           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' values.yaml
-           cat values.yaml
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+           cat val.yaml
            ls -la
            
       - name: Get changed files 

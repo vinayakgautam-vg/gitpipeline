@@ -53,13 +53,10 @@ jobs:
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
-          git branch -M master
           git commit -m "update config"
           git status
-          git branch 
-          cat .git/config
-          git push -f origin master --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          git push -f --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"done."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
 #       - name: Push changes
 #         uses: ad-m/github-push-action@master
 #         with:

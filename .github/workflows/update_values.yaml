@@ -1,0 +1,64 @@
+name: update values file 
+
+on:
+  push:
+   branches: 
+     - main
+  pull_request:
+   
+jobs:
+  test:
+    runs-on: ubuntu-18.04  
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+ 
+      - name: Get config map changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v18.6
+        with:
+          files: |
+            index.html
+            templates/NOTES.txt
+ 
+      - name: update config map command 
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "0chain config maps updated ."
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          cat <<\EOF > val.yaml
+          i
+          am
+          testing
+          config
+          map
+          in
+          git
+          action
+          in
+          task
+          EOF
+      
+      - name:  update values.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+           echo "updated values.yaml."
+           cat 
+           ls -la
+           pwd
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+           echo "$(<val.yaml)"
+           ls -la
+     
+      - name: Pushes to another repository
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: '~/val.yaml'
+          destination-github-username: 'vinayakgautam-vg'
+          destination-repository-name: 'npipeline-helm'
+          user-email: iamvinigautam@gmail.com
+          target-branch: master

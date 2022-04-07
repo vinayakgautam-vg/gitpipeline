@@ -44,17 +44,33 @@ jobs:
           ls 
           pwd
       
-#       - name:  update values.yaml
-#         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         run: |
-#            echo "updated values.yaml."
-#            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
-#            echo "$(<val.yaml)"
+      - name:  update values.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+           echo "updated values.yaml."
+           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+           echo "$(<val.yaml)"
+           mkdir update
+           cp val.yaml ../update
            
-#       - name: Pushes to another repository
-#         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         run: |
-#           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+      - name: Pushes to another repository
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          cp val.yaml ../update
+          cd ..
+          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+          cp val.yaml npipeline-helm/
+          cd npipeline-helm
+          git add val.yaml
+          git commit -m "update config"
+          git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+      
+           
+      - name: Pushes to another repository
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
 #           cp val.yaml npipeline-helm
 #           cd npipeline-helm
 #           pwd && ls -la 

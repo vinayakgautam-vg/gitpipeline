@@ -27,8 +27,6 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           echo "0chain config maps updated ."
-          ls 
-          pwd 
           cat <<\EOF > val.yaml
           i
           am
@@ -41,19 +39,13 @@ jobs:
           in
           task
           EOF
-          ls 
-          pwd
       
       - name:  update values.yaml
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
            echo "updated values.yaml."
-           cat 
-           ls -la
-           pwd
            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
            echo "$(<val.yaml)"
-           ls -la
            
       - name: Pushes to another repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -64,6 +56,7 @@ jobs:
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
+          git branch -M master
           git commit -m "update config"
           git push -u origin master --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"0chain config map updated."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

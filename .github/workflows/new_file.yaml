@@ -74,6 +74,7 @@ jobs:
         run: |
           cd ../update
           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+          git checkout main
           cp val.yaml npipeline-helm/
           cd npipeline-helm
           git config --global user.email "iamvinigautam@gmail.com"
@@ -81,5 +82,5 @@ jobs:
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
           git commit -m "update config"
-          git push -u main --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+          git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

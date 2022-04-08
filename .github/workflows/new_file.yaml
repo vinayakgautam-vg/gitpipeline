@@ -10,6 +10,24 @@ jobs:
   test:
     runs-on: ubuntu-18.04  
     steps:
+      - name: get docker image name
+        id: get_info
+        run: |
+         if [[ "${{github.ref}}" == refs/pull/* ]]; then
+          tag=${GITHUB_REF/\/merge/}
+          echo "TAG=$(echo pr-${tag:10})" >> $GITHUB_ENV
+         else
+          echo "TAG=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//-/g')" >> $GITHUB_ENV
+         fi
+         echo "BRANCH=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo ${GITHUB_REF#refs/*/} || echo $GITHUB_HEAD_REF)" >> $GITHUB_ENV
+         echo "SHA=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo $GITHUB_SHA || echo '${{ github.event.pull_request.head.sha }}')" >> $GITHUB_ENV
+      
+      - name: image name 
+        id: image_name
+        run: |
+         SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
+         echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV
+         
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
@@ -28,6 +46,7 @@ jobs:
           echo "0chain config maps updated ."
           cat <<\EOF > val.yaml
           i
+          ${{ env.NAME }}
           am
           testing
           config

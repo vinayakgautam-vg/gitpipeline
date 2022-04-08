@@ -54,20 +54,13 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           cd ../update
-          ls -la
           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
-          ls -la
-          ls -la npipeline-helm/
-          cat npipeline-helm/val.yaml
           cp val.yaml npipeline-helm/
           cd npipeline-helm
-          ls -la
-          cat val.yaml
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
           git add val.yaml
           git commit -m "update config"
-          git status
           git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
           curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

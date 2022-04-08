@@ -76,7 +76,7 @@ jobs:
           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
           cd npipeline-helm
           git checkout main
-          cp ../val.yaml npipeline-helm/
+          cp ../val.yaml .
           git config --global user.email "iamvinigautam@gmail.com"
           git config --global user.name "vinayakgautam-vg"
           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git

@@ -64,7 +64,7 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
            echo "updated values.yaml."
-           sed -i -e 's/^/    /' index.html &&  sed -i '  r index.html' val.yaml
+           sed -i -e 's/^/    /' index.html && cat index.html >> val.yaml
            echo "$(<val.yaml)"
            mkdir ../update
            cp val.yaml ../update

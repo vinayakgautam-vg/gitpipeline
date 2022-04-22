@@ -26,7 +26,7 @@ jobs:
       - name: diff
         run: |
            echo '${{ env.GIT_DIFF }}' 
-           git diff .github/workflows/alert2.yaml >> dif.log 
+           git diff index.html >> dif.log 
            cat dif.log
            curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
  

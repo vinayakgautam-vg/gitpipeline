@@ -36,12 +36,11 @@ jobs:
       - name: Notify changes in slack channel
         run: |
           ls -la && pwd
-          echo '{"text":"'> diff.log
           git diff .github/workflows/alert.yaml >> diff.log
           git diff index.html >> diff.log
           git diff templates/NOTES.txt >> diff.log
-          echo '"}'>> diff.log
+
           ls -la && pwd 
-          cat ./diff.log
+          cat diff.log
           
           curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}

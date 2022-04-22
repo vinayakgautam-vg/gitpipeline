@@ -1,59 +1,59 @@
-name: update values file 
+# name: update values file 
 
-on:
-  push:
-   branches: 
-     - main
-  pull_request:
+# on:
+#   push:
+#    branches: 
+#      - main
+#   pull_request:
    
-jobs:
-  test:
-    runs-on: ubuntu-18.04  
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+# jobs:
+#   test:
+#     runs-on: ubuntu-18.04  
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
  
-      - name: Get config map changed files
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v18.6
-        with:
-          files: |
-            index.html
-            templates/NOTES.txt
+#       - name: Get config map changed files
+#         id: changed-files-specific
+#         uses: tj-actions/changed-files@v18.6
+#         with:
+#           files: |
+#             index.html
+#             templates/NOTES.txt
  
-      - name: update config map command 
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-          echo "0chain config maps updated ."
-          cat <<\EOF > val.yaml
-          i
-          am
-          testing
-          config
-          map
-          in
-          git
-          action
-          in
-          task
-          EOF
+#       - name: update config map command 
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#           echo "0chain config maps updated ."
+#           cat <<\EOF > val.yaml
+#           i
+#           am
+#           testing
+#           config
+#           map
+#           in
+#           git
+#           action
+#           in
+#           task
+#           EOF
       
-      - name:  update values.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-           echo "updated values.yaml."
-           sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
-           echo "$(<val.yaml)"
+#       - name:  update values.yaml
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#            echo "updated values.yaml."
+#            sed -i -e 's/^/    /' index.html &&  sed -i '3  r index.html' val.yaml
+#            echo "$(<val.yaml)"
            
-      - name: Pushes to another repository
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-          git config --global user.email "iamvinigautam@gmail.com"
-          git config --global user.name "vinayakgautam-vg"
-          git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
-          git add val.yaml
-          git commit -m "update config"
-          git status
-          git push -f --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"done."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+#       - name: Pushes to another repository
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#           git config --global user.email "iamvinigautam@gmail.com"
+#           git config --global user.name "vinayakgautam-vg"
+#           git remote set-url origin https://github.com/vinayakgautam-vg/npipeline-helm.git
+#           git add val.yaml
+#           git commit -m "update config"
+#           git status
+#           git push -f --prune https://vinayakgautam-vg:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+#           curl -X POST -H 'Content-type: application/json' --data '{"text":"done."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

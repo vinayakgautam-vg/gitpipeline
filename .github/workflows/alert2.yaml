@@ -21,5 +21,6 @@ jobs:
       - name: diff
         run: |
            echo '${{ env.GIT_DIFF }}' 
-           git diff .github/workflows/alert2.yaml
+           git diff .github/workflows/alert2.yaml >> dif.log 
+           cat dif.log
       

@@ -1,68 +1,68 @@
-name: Docker Image CI
+# name: Docker Image CI
 
-on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+# on:
+# #   push:
+# #     branches: [ main ]
+# #   pull_request:
+# #     branches: [ main ]
 
-jobs:
+# jobs:
 
- Build:
+#  Build:
     
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gitpipeline:$(date +%s)
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag gitpipeline:$(date +%s)
       
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-         username: ${{ secrets.DOCKERHUB_USERNAME }}
-         password: ${{ secrets.DOCKERHUB_TOKEN }}
-         logout: true
+#     - name: Login to Docker Hub
+#       uses: docker/login-action@v1
+#       with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#          logout: true
    
-    - name: Build and push
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
+#     - name: Build and push
+#       id: docker_build
+#       uses: docker/build-push-action@v2
+#       with:
+#         push: true
+#         tags: ${{ secrets.DOCKERHUB_USERNAME }}/gitpipeline:latest
     
- Deploy:
+#  Deploy:
    
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Create kubeconfig
-      run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config
+#     needs: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Create kubeconfig
+#       run: |
+#         mkdir ${HOME}/.kube
+#         echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+#         cat ${HOME}/.kube/config
     
-    - name: Helm detete 
-      if: ${{ always() }}
-      run: |       
-        helm delete pipe 
+#     - name: Helm detete 
+#       if: ${{ always() }}
+#       run: |       
+#         helm delete pipe 
 
-    - name: Helm Chart 
-      if: ${{ always() }}
-      run: |       
-        helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
+#     - name: Helm Chart 
+#       if: ${{ always() }}
+#       run: |       
+#         helm repo add gitpipeline https://vinayakgautam-vg.github.io/gitpipeline/chart
     
-    - name: Helm Update
-      if: ${{ always() }}
-      run: |       
-        helm repo update gitpipeline
+#     - name: Helm Update
+#       if: ${{ always() }}
+#       run: |       
+#         helm repo update gitpipeline
         
-    - name: Helm Install
-      run: |
-        helm install pipe gitpipeline/gitpipeline  
+#     - name: Helm Install
+#       run: |
+#         helm install pipe gitpipeline/gitpipeline  
         
-    - name: NodePort
-      run: |
-         kubectl get svc 
+#     - name: NodePort
+#       run: |
+#          kubectl get svc 
      
 
           

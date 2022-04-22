@@ -1,85 +1,85 @@
-name: update config
+# name: update config
 
-on:
-  push:
-   branches: 
-     - main
-  pull_request:
+# on:
+#   push:
+#    branches: 
+#      - main
+#   pull_request:
    
-jobs:
-  test:
-    runs-on: ubuntu-18.04  
-    steps:
-      - name: get docker image name
-        id: get_info
-        run: |
-         if [[ "${{github.ref}}" == refs/pull/* ]]; then
-          tag=${GITHUB_REF/\/merge/}
-          echo "TAG=$(echo pr-${tag:10})" >> $GITHUB_ENV
-         else
-          echo "TAG=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//-/g')" >> $GITHUB_ENV
-         fi
-         echo "BRANCH=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo ${GITHUB_REF#refs/*/} || echo $GITHUB_HEAD_REF)" >> $GITHUB_ENV
-         echo "SHA=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo $GITHUB_SHA || echo '${{ github.event.pull_request.head.sha }}')" >> $GITHUB_ENV
+# jobs:
+#   test:
+#     runs-on: ubuntu-18.04  
+#     steps:
+#       - name: get docker image name
+#         id: get_info
+#         run: |
+#          if [[ "${{github.ref}}" == refs/pull/* ]]; then
+#           tag=${GITHUB_REF/\/merge/}
+#           echo "TAG=$(echo pr-${tag:10})" >> $GITHUB_ENV
+#          else
+#           echo "TAG=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//-/g')" >> $GITHUB_ENV
+#          fi
+#          echo "BRANCH=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo ${GITHUB_REF#refs/*/} || echo $GITHUB_HEAD_REF)" >> $GITHUB_ENV
+#          echo "SHA=$([ -z '${{ github.event.pull_request.head.sha }}' ] && echo $GITHUB_SHA || echo '${{ github.event.pull_request.head.sha }}')" >> $GITHUB_ENV
       
-      - name: image name 
-        id: image_name
-        run: |
-         SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
-         echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV
+#       - name: image name 
+#         id: image_name
+#         run: |
+#          SHORT_SHA=$(echo ${{ env.SHA }} | head -c 8)
+#          echo "NAME=$TAG-$SHORT_SHA" >> $GITHUB_ENV
          
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
  
-      - name: Get config map changed files
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v18.6
-        with:
-          files: |
-            index.html
-            templates/NOTES.txt
+#       - name: Get config map changed files
+#         id: changed-files-specific
+#         uses: tj-actions/changed-files@v18.6
+#         with:
+#           files: |
+#             index.html
+#             templates/NOTES.txt
  
-      - name: update config map command 
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-          echo "0chain config maps updated ."
-          cat <<\EOF > val.yaml
-          i
-          ${{ env.NAME }}
-          am
-          testing
-          config
-          map
-          in
-          git
-          action
-          in
-          task
-          EOF
-          ls 
-          pwd
+#       - name: update config map command 
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#           echo "0chain config maps updated ."
+#           cat <<\EOF > val.yaml
+#           i
+#           ${{ env.NAME }}
+#           am
+#           testing
+#           config
+#           map
+#           in
+#           git
+#           action
+#           in
+#           task
+#           EOF
+#           ls 
+#           pwd
       
-      - name:  update values.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-           echo "updated values.yaml."
-           sed -i -e 's/^/    /' index.html && cat index.html >> val.yaml
-           echo "$(<val.yaml)"
-           mkdir ../update
-           cp val.yaml ../update
+#       - name:  update values.yaml
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#            echo "updated values.yaml."
+#            sed -i -e 's/^/    /' index.html && cat index.html >> val.yaml
+#            echo "$(<val.yaml)"
+#            mkdir ../update
+#            cp val.yaml ../update
            
-      - name: Pushes to another repository
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-          cd ../update
-          git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
-          cd npipeline-helm
-          git checkout main
-          cp ../val.yaml .
-          git config --global user.email "iamvinigautam@gmail.com"
-          git config --global user.name "vinayakgautam-vg"
-          git add val.yaml
-          git commit -m "update config"
-          git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}
+#       - name: Pushes to another repository
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         run: |
+#           cd ../update
+#           git clone https://github.com/vinayakgautam-vg/npipeline-helm.git
+#           cd npipeline-helm
+#           git checkout main
+#           cp ../val.yaml .
+#           git config --global user.email "iamvinigautam@gmail.com"
+#           git config --global user.name "vinayakgautam-vg"
+#           git add val.yaml
+#           git commit -m "update config"
+#           git push --prune https://token:${{ secrets.API_TOKEN_GITHUB }}@github.com/vinayakgautam-vg/npipeline-helm.git
+#           curl -X POST -H 'Content-type: application/json' --data '{"text":"done"}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

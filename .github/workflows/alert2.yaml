@@ -71,4 +71,5 @@ jobs:
           git diff index.html >> diff.log
           git diff templates/NOTES.txt >> diff.log
           echo '"}'>> diff.log
-          cat ./diff.logcurl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          cat ./diff.log
+          curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}

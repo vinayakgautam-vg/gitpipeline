@@ -1,75 +1,76 @@
-# name: config
+name: config
 
-# on:
-#   push:
-#     branches: 
-#       - main
-  
-#   pull_request:
-#     branches: 
-#       - main
-
-
-      
-# jobs:
-#   COnfig_alert:
-#     runs-on: ubuntu-18.04
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: technote-space/get-diff-action@v6
-#         with:
-#           FILES: |
-#               - index.html
-#               - templates/NOTES.txt
-#               - .github/workflows/alert2.yaml
-              
-#       - name: diff
-#         run: |
-#            echo '${{ env.GIT_DIFF }}' 
-#            git diff .github/workflows/alert2.yaml >> dif.log 
-#            cat dif.log
- 
-name: test 
 on:
   push:
     branches: 
       - main
-    paths:
-      - index.html
-      - templates/NOTES.txt
-
+  
   pull_request:
     branches: 
       - main
-    paths:
-      - .github/workflows/alert.yaml
-      - index.html
-      - templates/NOTES.txt
-   
-jobs:
-  test:
-    runs-on: ubuntu-18.04  
-    steps:
-      - name: Install git
-        run: |
-          git --version
-          sudo add-apt-repository ppa:git-core/ppa
-          sudo apt update
-          sudo apt install git -y
-          git --version
 
-      - name: Checkout
-        uses: actions/checkout@v2
+
+      
+jobs:
+  COnfig_alert:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: technote-space/get-diff-action@v6
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
-             
-      - name: Notify changes in slack channel
+          FILES: |
+              - index.html
+              - templates/NOTES.txt
+              - .github/workflows/alert2.yaml
+              
+      - name: diff
         run: |
-          ls -la && pwd
-          echo '{"text":"'> diff.log
-          git diff .github/workflows/alert.yaml >> diff.log
-          git diff index.html >> diff.log
-          git diff templates/NOTES.txt >> diff.log
-          echo '"}'>> diff.log
-          cat ./diff.log
-          curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+           echo '${{ env.GIT_DIFF }}' 
+           git diff .github/workflows/alert2.yaml >> dif.log 
+           cat dif.log
+           curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+ 
+# name: test 
+# on:
+#   push:
+#     branches: 
+#       - main
+#     paths:
+#       - index.html
+#       - templates/NOTES.txt
+
+#   pull_request:
+#     branches: 
+#       - main
+#     paths:
+#       - .github/workflows/alert.yaml
+#       - index.html
+#       - templates/NOTES.txt
+   
+# jobs:
+#   test:
+#     runs-on: ubuntu-18.04  
+#     steps:
+#       - name: Install git
+#         run: |
+#           git --version
+#           sudo add-apt-repository ppa:git-core/ppa
+#           sudo apt update
+#           sudo apt install git -y
+#           git --version
+
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+             
+#       - name: Notify changes in slack channel
+#         run: |
+#           ls -la && pwd
+#           echo '{"text":"'> diff.log
+#           git diff .github/workflows/alert.yaml >> diff.log
+#           git diff index.html >> diff.log
+#           git diff templates/NOTES.txt >> diff.log
+#           echo '"}'>> diff.log
+#           cat ./diff.log
+#            curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}

@@ -19,7 +19,7 @@ jobs:
               - .github/workflows/alert2.yaml
               
       - name: diff
-        run: echo '${{ env.GIT_DIFF }}'
-        shell: |
+        run: |
+           echo '${{ env.GIT_DIFF }}' 
            git diff .github/workflows/alert2.yaml
       

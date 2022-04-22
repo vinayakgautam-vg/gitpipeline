@@ -11,6 +11,9 @@ on:
 jobs:
   COnfig_alert:
     runs-on: ubuntu-18.04
+    outputs:
+      all: ${{ steps.changes.outputs.all}}
+      
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -25,8 +28,10 @@ jobs:
               - .github/workflows/alert2.yaml
               
       - name: diff
+        id: changes
         run: |
            echo '${{ env.GIT_DIFF }}' 
+           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
            git diff --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} index.html
            git diff index.html >> dif.log 
            cat dif.log

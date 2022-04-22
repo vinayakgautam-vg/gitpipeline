@@ -9,13 +9,15 @@ on:
       - index.html
       - templates/NOTES.txt
   
-#   pull_request:
-#     branches: 
-#       - main
-#     paths:
-#       - .github/workflows/alert.yaml
-#       - index.html
-#       - templates/NOTES.txt
+  pull_request:
+    branches: 
+      - main
+    types:
+    - closed
+    paths:
+      - .github/workflows/alert.yaml
+      - index.html
+      - templates/NOTES.txt
    
 jobs:
   test:

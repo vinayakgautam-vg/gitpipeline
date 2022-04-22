@@ -4,18 +4,19 @@ on:
   push:
     branches: 
       - main
-  
   pull_request:
     branches: 
       - main
-
-
       
 jobs:
   COnfig_alert:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          
       - uses: technote-space/get-diff-action@v6
         with:
           FILES: |

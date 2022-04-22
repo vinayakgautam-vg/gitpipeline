@@ -37,9 +37,9 @@ jobs:
         run: |
           ls -la && pwd
           #cat <<\EOF > diff.sh
-          git diff .github/workflows/alert.yaml 
-          git diff index.html 
-          git diff templates/NOTES.txt
+          echo `git diff .github/workflows/alert.yaml` 
+          echo `git diff index.html` 
+          echo `git diff templates/NOTES.txt`
           #EOF
           #bash diff.sh >> diff.log
           #cat diff.log

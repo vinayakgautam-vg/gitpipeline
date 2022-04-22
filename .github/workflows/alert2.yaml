@@ -66,13 +66,9 @@ jobs:
       - name: Notify changes in slack channel
         run: |
           ls -la && pwd
-          #cat <<\EOF > diff.sh
-          git branch -a 
-          echo `git diff .github/workflows/alert.yaml` 
-          echo `git diff index.html` 
-          echo `git diff templates/NOTES.txt`
-          #EOF
-          #bash diff.sh >> diff.log
-          #cat diff.log
-          ls -la && pwd 
-          #curl -X POST -H 'Content-type: application/json' -d @diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          echo '{"text":"'> diff.log
+          git diff .github/workflows/alert.yaml >> diff.log
+          git diff index.html >> diff.log
+          git diff templates/NOTES.txt >> diff.log
+          echo '"}'>> diff.log
+          cat ./diff.logcurl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}

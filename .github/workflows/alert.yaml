@@ -3,7 +3,7 @@ name: config_change_alert
 on:
   push:
    branches: 
-     - staging
+     - main
    paths:
       - .github/workflows/alert.yaml
       - index.html

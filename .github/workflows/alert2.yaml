@@ -26,4 +26,6 @@ jobs:
           FILES: |
               - index.html
               - templates/NOTES.txt
-      - run: echo '${{ env.GIT_DIFF }}' | jq .
+              - .github/workflows/alert2.yaml
+              
+      - run: echo '${{ env.GIT_DIFF }}'

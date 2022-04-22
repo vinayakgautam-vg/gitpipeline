@@ -37,6 +37,7 @@ jobs:
         run: |
           ls -la && pwd
           #cat <<\EOF > diff.sh
+          git branch -a 
           echo `git diff .github/workflows/alert.yaml` 
           echo `git diff index.html` 
           echo `git diff templates/NOTES.txt`

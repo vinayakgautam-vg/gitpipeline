@@ -1,31 +1,78 @@
-name: config
+# name: config
 
+# on:
+#   push:
+#     branches: 
+#       - main
+  
+#   pull_request:
+#     branches: 
+#       - main
+
+
+      
+# jobs:
+#   COnfig_alert:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: technote-space/get-diff-action@v6
+#         with:
+#           FILES: |
+#               - index.html
+#               - templates/NOTES.txt
+#               - .github/workflows/alert2.yaml
+              
+#       - name: diff
+#         run: |
+#            echo '${{ env.GIT_DIFF }}' 
+#            git diff .github/workflows/alert2.yaml >> dif.log 
+#            cat dif.log
+ 
+name: test 
 on:
   push:
     branches: 
       - main
-  
+    paths:
+      - index.html
+      - templates/NOTES.txt
+
   pull_request:
     branches: 
       - main
-
-
-      
+    paths:
+      - .github/workflows/alert.yaml
+      - index.html
+      - templates/NOTES.txt
+   
 jobs:
-  COnfig_alert:
-    runs-on: ubuntu-18.04
+  test:
+    runs-on: ubuntu-18.04  
     steps:
-      - uses: actions/checkout@v2
-      - uses: technote-space/get-diff-action@v6
-        with:
-          FILES: |
-              - index.html
-              - templates/NOTES.txt
-              - .github/workflows/alert2.yaml
-              
-      - name: diff
+      - name: Install git
         run: |
-           echo '${{ env.GIT_DIFF }}' 
-           git diff .github/workflows/alert2.yaml >> dif.log 
-           cat dif.log
-      
+          git --version
+          sudo add-apt-repository ppa:git-core/ppa
+          sudo apt update
+          sudo apt install git -y
+          git --version
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+             
+      - name: Notify changes in slack channel
+        run: |
+          ls -la && pwd
+          #cat <<\EOF > diff.sh
+          git branch -a 
+          echo `git diff .github/workflows/alert.yaml` 
+          echo `git diff index.html` 
+          echo `git diff templates/NOTES.txt`
+          #EOF
+          #bash diff.sh >> diff.log
+          #cat diff.log
+          ls -la && pwd 
+          #curl -X POST -H 'Content-type: application/json' -d @diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}

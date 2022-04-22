@@ -1,48 +1,24 @@
-# name: config_change_alert
+name: config_change_alert
 
-# on:
-#   push:
-#     branches: 
-#       - main
-#     paths:
-#       - index.html
-#       - templates/NOTES.txt
-
-#   pull_request:
-#     branches: 
-#       - main
-#     paths:
-#       - .github/workflows/alert.yaml
-#       - index.html
-#       - templates/NOTES.txt
+on:
+  push:
+   branches: 
+     - staging
    
-# jobs:
-#   test:
-#     runs-on: ubuntu-18.04  
-#     steps:
-#       - name: Install git
-#         run: |
-#           git --version
-#           sudo add-apt-repository ppa:git-core/ppa
-#           sudo apt update
-#           sudo apt install git -y
-#           git --version
+jobs:
+  test:
+    runs-on: docker-builds
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-#       - name: Checkout
-#         uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+      - name: Get changed files using defaults
+        id: changed-files
+        uses: tj-actions/changed-files@v18.4
              
-#       - name: Notify changes in slack channel
-#         run: |
-#           ls -la && pwd
-#           #cat <<\EOF > diff.sh
-#           git branch -a 
-#           echo `git diff .github/workflows/alert.yaml` 
-#           echo `git diff index.html` 
-#           echo `git diff templates/NOTES.txt`
-#           #EOF
-#           #bash diff.sh >> diff.log
-#           #cat diff.log
-#           ls -la && pwd 
-#           #curl -X POST -H 'Content-type: application/json' -d @diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+      - name: Run step when a 0chain.yaml file changes
+        if: contains(steps.changed-files.outputs.modified_files, 'index.html')
+        run: |
+          echo "Your 0chain.yaml file has been modified."
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Your index.html config file has been modified."}' ${{ secrets.CHANNEL_WEBHOOK_URL }}

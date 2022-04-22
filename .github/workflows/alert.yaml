@@ -43,4 +43,4 @@ jobs:
           ls -la && pwd 
           
           
-          curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
+          #curl -X POST -H 'Content-type: application/json' -d @./diff.log ${{ secrets.CHANNEL_WEBHOOK_URL }}
